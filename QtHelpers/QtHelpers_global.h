@@ -1,0 +1,12 @@
+#ifndef QTHELPERS_GLOBAL_H
+#define QTHELPERS_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(QTHELPERS_LIBRARY)
+#  define QTHELPERSSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define QTHELPERSSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QTHELPERS_GLOBAL_H
