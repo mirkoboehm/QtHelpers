@@ -11,7 +11,7 @@ QT       -= gui
 TARGET = tst_TempValTests
 CONFIG   += console
 CONFIG   -= app_bundle
-
+INCLUDEPATH += ../
 TEMPLATE = app
 
 

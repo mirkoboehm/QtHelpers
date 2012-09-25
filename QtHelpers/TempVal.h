@@ -7,18 +7,17 @@ template <typename T>
 class TemporaryValue {
 public:
     explicit TemporaryValue( T& v, const T& tv )
-        : var(v)
-        , oldValue( v ) {
-        var = tv;
+        : var_(v)
+        , oldValue_( v ) {
+        var_ = tv;
     }
 
-    ~TemporaryValue() {
-        var = oldValue;
-    }
+    ~TemporaryValue() { var_ = oldValue_; }
+    const T& oldValue() const { return oldValue_; }
 
 private:
-    T& var;
-    const T oldValue;
+    T& var_;
+    const T oldValue_;
 };
 
 }
