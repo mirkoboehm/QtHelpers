@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 #include <QObject>
+#include <QtCore>
 
 namespace QtHelpers {
 
@@ -41,7 +42,6 @@ QString qobject_description(const QObject* object) {
         return addressWithName;
     } else {
         return address;
-
     }
 }
 
@@ -64,13 +64,16 @@ QString connection_description(const QObject* sender, const char* signal,
 }
 
 std::string connect_error_description(const QObject* sender, const char* signal,
-                                      const QObject* receiver, const char* method,
-                                      Qt::ConnectionType type)
+                                      const QObject* receiver, const char* method)
 {
-
-    const QString desc = QObject::tr("Error connecting %1")
-            .arg(connection_description(sender, signal, receiver, method));
+    const QString desc = QObject::tr("Error connecting %1").arg(connection_description(sender, signal, receiver, method));
     return desc.toStdString();
+}
+
+std::string connect_error_description(const QObject* sender, const QMetaMethod& signal,
+                                      const QObject* receiver, const QMetaMethod& method)
+{
+    return connect_error_description(sender, signal.signature(), receiver, method.signature());
 }
 
 std::string disconnect_error_description(const QObject* sender, const char* signal,
@@ -80,13 +83,19 @@ std::string disconnect_error_description(const QObject* sender, const char* sign
     return desc.toStdString();
 }
 
+std::string disconnect_error_description(const QObject* sender, const QMetaMethod& signal,
+                                         const QObject* receiver, const QMetaMethod& method)
+{
+    return disconnect_error_description(sender, signal.signature(), receiver, method.signature());
+}
+
 }
 
 inline void safe_connect(const QObject *sender, const char *signal,
                          const QObject *receiver, const char *method,
                          Qt::ConnectionType type = Qt::AutoConnection) {
     if (!QObject::connect(sender, signal, receiver, method, type) ) {
-        throw FailedConnectError(connect_error_description(sender, signal, receiver, method, type));
+        throw FailedConnectError(connect_error_description(sender, signal, receiver, method));
     }
 }
 
@@ -94,24 +103,22 @@ inline void safe_connect(const QObject *sender, const QMetaMethod &signal,
                          const QObject *receiver, const QMetaMethod &method,
                          Qt::ConnectionType type = Qt::AutoConnection) {
     if (!QObject::connect(sender, signal, receiver, method, type) ) {
-        //TODO: implement
-        // throw FailedConnectError(connect_error_description(sender, signal, receiver, method, type));
+        throw FailedConnectError(connect_error_description(sender, signal, receiver, method));
     }
 }
 
 
-inline void disconnect(const QObject *sender, const char *signal,
+inline void safe_disconnect(const QObject *sender, const char *signal,
                        const QObject *receiver, const char *member) {
     if (!QObject::disconnect(sender, signal, receiver, member) ) {
         throw FailedDisconnectError(disconnect_error_description(sender, signal, receiver, member));
     }
 }
 
-inline void disconnect(const QObject *sender, const QMetaMethod &signal,
+inline void safe_disconnect(const QObject *sender, const QMetaMethod &signal,
                        const QObject *receiver, const QMetaMethod &member) {
     if (!QObject::disconnect(sender, signal, receiver, member) ) {
-        //TODO: implement
-        // throw FailedDisconnectError(connect_error_description(sender, signal, receiver, member));
+        throw FailedDisconnectError(connect_error_description(sender, signal, receiver, member));
     }
 }
 
