@@ -1,0 +1,24 @@
+Notes for QtHelpers repository
+==============================
+
+* Admin
+
+** TODO Add license. 
+
+** TODO Add README.markdown.
+ 
+** TODO Push to GitHub.
+
+* Code
+
+** TODO Extract qobject_description into own header?
+
+** TODO Add scoped thread object.
+
+** TODO Add Optional template (tracks if value is set).
+
+** DONE Add TemporaryValue template.
+  CLOSED: [2012-09-25 16:10]
+
+** DONE Add SafeConnect functions (verifies if QObject::connect succeeds).
+  CLOSED: [2012-10-04 Thu 00:55]
