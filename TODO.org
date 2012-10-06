@@ -3,11 +3,14 @@ Notes for QtHelpers repository
 
 * Admin
 
-** TODO Add license. 
+** DONE Add license. 
+   CLOSED: [2012-10-06 Sat 17:14]
 
-** TODO Add README.markdown.
+** DONE Add README.markdown.
+   CLOSED: [2012-10-06 Sat 17:14]
  
-** TODO Push to GitHub.
+** DONE Push to GitHub.
+   CLOSED: [2012-10-06 Sat 17:14]
 
 * Code
 

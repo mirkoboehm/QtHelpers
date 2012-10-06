@@ -1,3 +1,9 @@
+/* © 2012 Mirko Boehm <mirko@agile-workers.com>
+ * This file is part of QtHelpers.
+ *
+ * QtHelpers is licensed under the LGPL version 3.0.
+ */
+
 #include <QString>
 #include <QtTest>
 
