@@ -12,6 +12,8 @@
 #include <QObject>
 #include <QtCore>
 
+#include <QtHelpers/QObjectDescription.h>
+
 namespace QtHelpers {
 
 class FailedSafeConnectError : public std::runtime_error {
@@ -36,20 +38,6 @@ public:
 };
 
 namespace {
-
-QString qobject_description(const QObject* object) {
-    const QString address(object == 0
-                          ? QObject::tr("(null)")
-                          : QObject::tr("%1@%2")
-                            .arg(object->metaObject()->className())
-                            .arg(QString::number(ulong(object), 16).toUpper()));
-    if (object && !object->objectName().isEmpty()) {
-        const QString addressWithName = QObject::tr("\"%1\"[%2]").arg(object->objectName()).arg(address);
-        return addressWithName;
-    } else {
-        return address;
-    }
-}
 
 QString method_description(const char* method) {
     const QString text(method == 0 ? QObject::tr("(null") : QString(method));

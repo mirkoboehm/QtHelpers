@@ -7,4 +7,5 @@ DEFINES += QTHELPERS_LIBRARY
 HEADERS += QtHelpers_global.h \
     TempVal.h \
     Optional.h \
-    SafeConnect.h
+    SafeConnect.h\
+    QObjectDescription.h

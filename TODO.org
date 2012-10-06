@@ -14,7 +14,8 @@ Notes for QtHelpers repository
 
 * Code
 
-** TODO Extract qobject_description into own header?
+** DONE Extract qobject_description into own header?
+   CLOSED: [2012-10-06 Sat 17:25]
 
 ** TODO Add scoped thread object.
 
