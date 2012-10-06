@@ -12,6 +12,7 @@ public:
 
 private Q_SLOTS:
     void testOptionalValue();
+    void testUnsetValue();
 };
 
 OptionalValueTests::OptionalValueTests()
@@ -29,6 +30,17 @@ void OptionalValueTests::testOptionalValue()
     QCOMPARE(true, i.isSet());
     QCOMPARE(4, i.value());
 
+}
+
+void OptionalValueTests::testUnsetValue()
+{
+    using namespace QtHelpers;
+
+    Optional<int> i = 4;
+    QCOMPARE(true, i.isSet());
+    QCOMPARE(4, i.value());
+    i.unSet();
+    QCOMPARE(false, i.isSet());
 }
 
 QTEST_APPLESS_MAIN(OptionalValueTests)

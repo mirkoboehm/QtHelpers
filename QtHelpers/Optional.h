@@ -51,6 +51,11 @@ public:
         return set_;
     }
 
+    void unSet() {
+        set_ = false;
+        v_ = T();
+    }
+
     const T& value() const {
         Q_ASSERT( set_ );
         return v_;

@@ -15,7 +15,8 @@ Notes for QtHelpers repository
 
 ** TODO Add scoped thread object.
 
-** TODO Add Optional template (tracks if value is set).
+** DONE Add Optional template (tracks if value is set).
+   CLOSED: [2012-10-06 Sat 16:56]
 
 ** DONE Add TemporaryValue template.
   CLOSED: [2012-09-25 16:10]
