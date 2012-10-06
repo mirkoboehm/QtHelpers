@@ -5,7 +5,6 @@ TEMPLATE = lib
 DEFINES += QTHELPERS_LIBRARY
 
 HEADERS += QtHelpers_global.h \
-    TempVal.h
-
-HEADERS += \
+    TempVal.h \
+    Optional.h \
     SafeConnect.h
