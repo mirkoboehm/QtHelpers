@@ -2,6 +2,8 @@
  * This file is part of QtHelpers.
  *
  * QtHelpers is licensed under the LGPL version 3.0.
+ *
+ * Kudos: Frank Osterfeld <osterfeld@kde.org>
  */
 
 #ifndef OPTIONAL_H
@@ -14,7 +16,7 @@ namespace QtHelpers {
 template <typename T>
 class Optional {
 public:
-    explicit Optional() : set_( false ) {}
+    explicit Optional() : set_( false ), v_() {}
 
     Optional( const T& v_ ) : set_( true ), v_( v_ ) {}
 
