@@ -10,7 +10,7 @@ class DelayedSignalEmitterTest : public QObject
     
 public:
     DelayedSignalEmitterTest();
-    
+
 private Q_SLOTS:
     void testDelayedEmit();
 
@@ -32,7 +32,9 @@ void DelayedSignalEmitterTest::testDelayedEmit()
     {
         QtHelpers::DelayedSignalEmitter s;
         QMutexLocker l(&m_mutex);
+        QVERIFY(!s.hasSignal());
         s.setMethod(this, "slotTobeCalledFromDelayedEmitTest", Qt::DirectConnection, Q_ARG(int, 1));
+        QVERIFY(s.hasSignal());
     }
     QCOMPARE(m_slotTobeCalledFromDelayedEmitTestWasCalled, true);
 }

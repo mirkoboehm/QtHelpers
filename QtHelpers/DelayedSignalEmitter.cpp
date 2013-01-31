@@ -36,7 +36,7 @@ DelayedSignalEmitter::DelayedSignalEmitter()
 DelayedSignalEmitter::~DelayedSignalEmitter()
 {
     Q_D(DelayedSignalEmitter);
-    if (d->object!=0 && d->member != 0) {
+    if (hasSignal()) {
         if (!QMetaObject::invokeMethod(d->object, d->member, d->type,
                                        d->val0,d-> val1,d-> val2, d->val3, d->val4,
                                        d->val5, d->val6, d->val7, d->val8, d->val9)) {
@@ -68,6 +68,12 @@ void DelayedSignalEmitter::setMethod(QObject *object, const char *member,
     d->val7 = val7;
     d->val8 = val8;
     d->val9 = val9;
+}
+
+bool DelayedSignalEmitter::hasSignal() const
+{
+    Q_D(const DelayedSignalEmitter);
+    return d->object!=0 && d->member != 0;
 }
 
 }

@@ -17,6 +17,7 @@ class DelayedSignalEmitter
 public:
     explicit DelayedSignalEmitter();
     ~DelayedSignalEmitter();
+
     void setMethod(QObject * obj, const char * member,
                    Qt::ConnectionType type = Qt::DirectConnection,
                    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
@@ -24,6 +25,9 @@ public:
                    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
                    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
                    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+
+
+    bool hasSignal() const;
 
 private:
     DelayedSignalEmitterPrivate* const d_ptr;
