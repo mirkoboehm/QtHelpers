@@ -1,3 +1,8 @@
+/* © 2013 Mirko Boehm <mirko@agile-workers.com>
+ * This file is part of QtHelpers.
+ *
+ * QtHelpers is licensed under the LGPL version 3.0.
+ */
 #ifndef DELAYEDSIGNALEMITTER_H
 #define DELAYEDSIGNALEMITTER_H
 
