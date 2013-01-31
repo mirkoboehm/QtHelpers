@@ -5,6 +5,9 @@
 #include <Qt>
 
 class QObject;
+
+namespace QtHelpers {
+
 class DelayedSignalEmitterPrivate;
 
 class DelayedSignalEmitter
@@ -25,5 +28,7 @@ public:
 private:
     DelayedSignalEmitterPrivate* const d_ptr;
 };
+
+}
 
 #endif // DELAYEDSIGNALEMITTER_H

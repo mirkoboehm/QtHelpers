@@ -3,6 +3,8 @@
 
 #include "DelayedSignalEmitter.h"
 
+namespace QtHelpers {
+
 class DelayedSignalEmitterPrivate {
 public:
     DelayedSignalEmitterPrivate()
@@ -66,4 +68,6 @@ void DelayedSignalEmitter::setMethod(QObject *object, const char *member,
     d->val7 = val7;
     d->val8 = val8;
     d->val9 = val9;
+}
+
 }

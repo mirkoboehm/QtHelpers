@@ -30,7 +30,7 @@ DelayedSignalEmitterTest::DelayedSignalEmitterTest()
 void DelayedSignalEmitterTest::testDelayedEmit()
 {
     {
-        DelayedSignalEmitter s;
+        QtHelpers::DelayedSignalEmitter s;
         QMutexLocker l(&m_mutex);
         s.setMethod(this, "slotTobeCalledFromDelayedEmitTest", Qt::DirectConnection, Q_ARG(int, 1));
     }
