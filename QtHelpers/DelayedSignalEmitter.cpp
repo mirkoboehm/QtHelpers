@@ -76,4 +76,12 @@ bool DelayedSignalEmitter::hasSignal() const
     return d->object!=0 && d->member != 0;
 }
 
+void DelayedSignalEmitter::clear()
+{
+    Q_D(DelayedSignalEmitter);
+    d->object = 0;
+    d->member = 0;
+    Q_ASSERT(!hasSignal());
+}
+
 }

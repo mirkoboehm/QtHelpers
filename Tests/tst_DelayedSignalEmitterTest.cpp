@@ -13,6 +13,7 @@ public:
 
 private Q_SLOTS:
     void testDelayedEmit();
+    void testClear();
 
 public Q_SLOTS:
     void slotTobeCalledFromDelayedEmitTest(int arg1);
@@ -37,6 +38,16 @@ void DelayedSignalEmitterTest::testDelayedEmit()
         QVERIFY(s.hasSignal());
     }
     QCOMPARE(m_slotTobeCalledFromDelayedEmitTestWasCalled, true);
+}
+
+void DelayedSignalEmitterTest::testClear()
+{
+    QtHelpers::DelayedSignalEmitter s;
+    QVERIFY(!s.hasSignal());
+    s.setMethod(this, "slotTobeCalledFromDelayedEmitTest", Qt::DirectConnection, Q_ARG(int, 1));
+    QVERIFY(s.hasSignal());
+    s.clear();
+    QVERIFY(!s.hasSignal());
 }
 
 void DelayedSignalEmitterTest::slotTobeCalledFromDelayedEmitTest(int arg1)

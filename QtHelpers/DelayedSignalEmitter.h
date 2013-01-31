@@ -29,6 +29,8 @@ public:
 
     bool hasSignal() const;
 
+    void clear();
+
 private:
     DelayedSignalEmitterPrivate* const d_ptr;
 };
