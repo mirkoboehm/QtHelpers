@@ -5,9 +5,12 @@
 #include <Qt>
 
 class QObject;
+class DelayedSignalEmitterPrivate;
 
 class DelayedSignalEmitter
 {
+    Q_DECLARE_PRIVATE(DelayedSignalEmitter)
+
 public:
     explicit DelayedSignalEmitter();
     ~DelayedSignalEmitter();
@@ -20,19 +23,7 @@ public:
                    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
 
 private:
-    Qt::ConnectionType m_type;
-    QObject * m_object;
-    const char* m_member;
-    QGenericArgument m_val0;
-    QGenericArgument m_val1;
-    QGenericArgument m_val2;
-    QGenericArgument m_val3;
-    QGenericArgument m_val4;
-    QGenericArgument m_val5;
-    QGenericArgument m_val6;
-    QGenericArgument m_val7;
-    QGenericArgument m_val8;
-    QGenericArgument m_val9;
+    DelayedSignalEmitterPrivate* const d_ptr;
 };
 
 #endif // DELAYEDSIGNALEMITTER_H
