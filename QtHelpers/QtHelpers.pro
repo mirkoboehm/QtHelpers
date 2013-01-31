@@ -13,3 +13,9 @@ HEADERS += QtHelpers_global.h \
 
 SOURCES += \
     DelayedSignalEmitter.cpp
+
+HEADERS += \
+    QtException.h
+
+SOURCES += \
+    QtException.cpp

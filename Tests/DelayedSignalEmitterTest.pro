@@ -10,6 +10,8 @@ TEMPLATE = app
 
 
 SOURCES += tst_DelayedSignalEmitterTest.cpp \
-    ../QtHelpers/DelayedSignalEmitter.cpp
-HEADERS += ../QtHelpers/DelayedSignalEmitter.h
+    ../QtHelpers/DelayedSignalEmitter.cpp \
+    ../QtHelpers/QtException.cpp
+HEADERS += ../QtHelpers/DelayedSignalEmitter.h \
+    ../QtHelpers/QtException.h
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

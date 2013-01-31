@@ -14,6 +14,8 @@ public:
 private Q_SLOTS:
     void testDelayedEmit();
     void testClear();
+    void testFailingEmit();
+    void testFailingOptionalEmit();
 
 public Q_SLOTS:
     void slotTobeCalledFromDelayedEmitTest(int arg1);
@@ -48,6 +50,29 @@ void DelayedSignalEmitterTest::testClear()
     QVERIFY(s.hasSignal());
     s.clear();
     QVERIFY(!s.hasSignal());
+}
+
+void DelayedSignalEmitterTest::testFailingEmit()
+{
+    try {
+        {
+            QtHelpers::DelayedSignalEmitter s;
+            s.setMethod(this, "no_such_method");
+        }
+        QFAIL("An exception should have occured before getting here");
+    } catch(QtHelpers::DelayedSignalEmitter::Exception& e) {
+        qDebug() <<"(Expected)"<< qPrintable(e.message());
+    }
+}
+
+void DelayedSignalEmitterTest::testFailingOptionalEmit()
+{
+    try {
+        QtHelpers::DelayedSignalEmitter s(false); //mustSucceed is false
+        s.setMethod(this, "no_such_method");
+    } catch(QtHelpers::DelayedSignalEmitter::Exception& e) {
+        QFAIL("No exception should expected in this case");
+    }
 }
 
 void DelayedSignalEmitterTest::slotTobeCalledFromDelayedEmitTest(int arg1)

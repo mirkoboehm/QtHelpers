@@ -7,12 +7,13 @@ namespace QtHelpers {
 
 class DelayedSignalEmitterPrivate {
 public:
-    DelayedSignalEmitterPrivate()
-        : type(Qt::AutoConnection)
+    DelayedSignalEmitterPrivate(bool mustSucceed_)
+        : mustSucceed(mustSucceed_)
+        , type(Qt::AutoConnection)
         , object(0)
         , member(0)
     {}
-
+    bool mustSucceed;
     Qt::ConnectionType type;
     QObject * object;
     const char* member;
@@ -28,8 +29,13 @@ public:
     QGenericArgument val9;
 };
 
-DelayedSignalEmitter::DelayedSignalEmitter()
-    : d_ptr(new DelayedSignalEmitterPrivate())
+DelayedSignalEmitter::Exception::Exception(const QString &message)
+    : QtException(message)
+{
+}
+
+DelayedSignalEmitter::DelayedSignalEmitter(bool mustSucceed)
+    : d_ptr(new DelayedSignalEmitterPrivate(mustSucceed))
 {
 }
 
@@ -40,8 +46,13 @@ DelayedSignalEmitter::~DelayedSignalEmitter()
         if (!QMetaObject::invokeMethod(d->object, d->member, d->type,
                                        d->val0,d-> val1,d-> val2, d->val3, d->val4,
                                        d->val5, d->val6, d->val7, d->val8, d->val9)) {
-            //FIXME exception?
-            qDebug() << Q_FUNC_INFO << "error invoking method" << d->member << "on object" << d->object;
+            if (d->mustSucceed) {
+                const QString msg = QObject::tr("Error invoking meta method \"%1\" on object 0x%2 of class %3")
+                        .arg(d->member)
+                        .arg((qulonglong)d->object, 8, 16)
+                        .arg(d->object->metaObject()->className());
+                throw Exception(msg);
+            }
         }
     }
     delete d_ptr;

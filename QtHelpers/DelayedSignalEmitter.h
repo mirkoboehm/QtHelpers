@@ -1,8 +1,12 @@
 #ifndef DELAYEDSIGNALEMITTER_H
 #define DELAYEDSIGNALEMITTER_H
 
+#include <stdexcept>
+
 #include <QGenericArgument>
 #include <Qt>
+
+#include "QtException.h"
 
 class QObject;
 
@@ -15,7 +19,12 @@ class DelayedSignalEmitter
     Q_DECLARE_PRIVATE(DelayedSignalEmitter)
 
 public:
-    explicit DelayedSignalEmitter();
+    class Exception : public QtException {
+    public:
+        explicit Exception(const QString& message);
+    };
+
+    explicit DelayedSignalEmitter(bool mustSucceed = true);
     ~DelayedSignalEmitter();
 
     void setMethod(QObject * obj, const char * member,
