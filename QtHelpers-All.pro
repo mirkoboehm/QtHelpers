@@ -2,7 +2,8 @@ TEMPLATE = subdirs
 SUBDIRS  = QtHelpers \
     Tests/TempValTests.pro \
     Tests/SafeConnectTests.pro \
-    Tests/OptionalValueTests.pro
+    Tests/OptionalValueTests.pro \
+    Tests/DelayedSignalEmitterTest.pro
 
 OTHER_FILES = LICENSE-lgpl-3.0.txt \
     README.md \

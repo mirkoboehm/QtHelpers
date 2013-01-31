@@ -8,4 +8,8 @@ HEADERS += QtHelpers_global.h \
     TempVal.h \
     Optional.h \
     SafeConnect.h\
-    QObjectDescription.h
+    QObjectDescription.h \
+    DelayedSignalEmitter.h
+
+SOURCES += \
+    DelayedSignalEmitter.cpp
