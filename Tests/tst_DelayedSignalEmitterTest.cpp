@@ -17,34 +17,58 @@ public:
     DelayedSignalEmitterTest();
 
 private Q_SLOTS:
-    void testDelayedEmit();
+    void testDelayedSlotInvokation();
+    void testDelayedSignalEmit();
     void testClear();
     void testFailingEmit();
     void testFailingOptionalEmit();
 
 public Q_SLOTS:
-    void slotTobeCalledFromDelayedEmitTest(int arg1);
+    void slotToBeCalledFromDelayedEmitTest(int arg1);
+    void slotToBeConnectedToTestSignal(int arg1, int arg2);
+
+Q_SIGNALS:
+    void testSignal(int arg1, int arg2);
 
 private:
     QMutex m_mutex;
-    bool m_slotTobeCalledFromDelayedEmitTestWasCalled;
+    bool m_slotToBeCalledFromDelayedEmitTestWasCalled;
+    bool m_slotToBeConnectedToTestSignalWasCalled;
 };
 
 DelayedSignalEmitterTest::DelayedSignalEmitterTest()
-    : m_slotTobeCalledFromDelayedEmitTestWasCalled(false)
+    : m_slotToBeCalledFromDelayedEmitTestWasCalled(false)
+    , m_slotToBeConnectedToTestSignalWasCalled(false)
 {
+    connect(this, SIGNAL(testSignal(int,int)), SLOT(slotToBeConnectedToTestSignal(int,int)));
 }
 
-void DelayedSignalEmitterTest::testDelayedEmit()
+void DelayedSignalEmitterTest::testDelayedSlotInvokation()
 {
-    {
+    try {
         QtHelpers::DelayedSignalEmitter s;
         QMutexLocker l(&m_mutex);
         QVERIFY(!s.hasSignal());
-        s.setMethod(this, "slotTobeCalledFromDelayedEmitTest", Qt::DirectConnection, Q_ARG(int, 1));
+        s.setMethod(this, "slotToBeCalledFromDelayedEmitTest", Qt::DirectConnection, Q_ARG(int, 1));
         QVERIFY(s.hasSignal());
+    } catch(QtHelpers::DelayedSignalEmitter::Exception& e) {
+        QFAIL(qPrintable(e.message()));
     }
-    QCOMPARE(m_slotTobeCalledFromDelayedEmitTestWasCalled, true);
+    QCOMPARE(m_slotToBeCalledFromDelayedEmitTestWasCalled, true);
+}
+
+void DelayedSignalEmitterTest::testDelayedSignalEmit()
+{
+    try {
+        QtHelpers::DelayedSignalEmitter s;
+        QMutexLocker l(&m_mutex);
+        QVERIFY(!s.hasSignal());
+        s.setMethod(this, "testSignal", Qt::DirectConnection, Q_ARG(int, 1), Q_ARG(int, 2));
+        QVERIFY(s.hasSignal());
+    } catch(QtHelpers::DelayedSignalEmitter::Exception& e) {
+        QFAIL(qPrintable(e.message()));
+    }
+    QCOMPARE(m_slotToBeCalledFromDelayedEmitTestWasCalled, true);
 }
 
 void DelayedSignalEmitterTest::testClear()
@@ -80,13 +104,23 @@ void DelayedSignalEmitterTest::testFailingOptionalEmit()
     }
 }
 
-void DelayedSignalEmitterTest::slotTobeCalledFromDelayedEmitTest(int arg1)
+void DelayedSignalEmitterTest::slotToBeCalledFromDelayedEmitTest(int arg1)
 {
     const bool canBeLocked = m_mutex.tryLock();
+    m_mutex.unlock();
     QVERIFY(canBeLocked == true);
     QCOMPARE(arg1, 1);
-    m_slotTobeCalledFromDelayedEmitTestWasCalled = true;
+    m_slotToBeCalledFromDelayedEmitTestWasCalled = true;
+}
+
+void DelayedSignalEmitterTest::slotToBeConnectedToTestSignal(int arg1, int arg2)
+{
+    const bool canBeLocked = m_mutex.tryLock();
     m_mutex.unlock();
+    QVERIFY(canBeLocked == true);
+    QCOMPARE(arg1, 1);
+    QCOMPARE(arg2, 2);
+    m_slotToBeConnectedToTestSignalWasCalled = true;
 }
 
 QTEST_MAIN(DelayedSignalEmitterTest)
